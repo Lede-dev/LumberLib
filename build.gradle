@@ -128,15 +128,6 @@ subprojects {
 
 }
 
-// Modules
-project(':modules:lumberlib-module-color') {
-    jar {
-        enabled = true
-    }
-
-    dependencies { }
-}
-
 // Applications
 project(':applications:lumberlib-app-spigot') {
     jar {
@@ -147,8 +138,27 @@ project(':applications:lumberlib-app-spigot') {
     }
 
     dependencies {
-        implementation project(':modules:lumberlib-module-color')
-        testImplementation project(':modules:lumberlib-module-color')
+    }
+
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = 'https://maven.pkg.github.com/lede-dev/' + rootProject.name.toLowerCase()
+                credentials {
+                    username = env.fetch('GPR_USER', System.getenv('GPR_USER') ?: '')
+                    password = env.fetch('GPR_KEY', System.getenv('GPR_KEY') ?: '')
+                }
+            }
+        }
+        publications {
+            gpr(MavenPublication) {
+                groupId = this.group
+                artifactId = rootProject.name.toLowerCase()
+                version = this.version
+                from(components.java)
+            }
+        }
     }
 }
 
@@ -161,7 +171,26 @@ project(':applications:lumberlib-app-proxy') {
     }
 
     dependencies {
-        implementation project(':modules:lumberlib-module-color')
-        testImplementation project(':modules:lumberlib-module-color')
+    }
+
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = 'https://maven.pkg.github.com/lede-dev/' + rootProject.name.toLowerCase()
+                credentials {
+                    username = env.fetch('GPR_USER', System.getenv('GPR_USER') ?: '')
+                    password = env.fetch('GPR_KEY', System.getenv('GPR_KEY') ?: '')
+                }
+            }
+        }
+        publications {
+            gpr(MavenPublication) {
+                groupId = this.group
+                artifactId = rootProject.name.toLowerCase() + "-proxy"
+                version = this.version
+                from(components.java)
+            }
+        }
     }
 }

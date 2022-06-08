@@ -5,4 +5,6 @@ include 'applications:lumberlib-app-proxy'
 include 'applications:lumberlib-app-test'
 
 include 'modules:lumberlib-module-color'
+include 'applications:lumberlib-app-test'
+findProject(':applications:lumberlib-app-test')?.name = 'lumberlib-app-test'
 
