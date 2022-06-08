@@ -1,12 +1,26 @@
 package me.lede.lumberlibforspigot.registry;
 
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
+
 public class CommandRegistry {
 
-    public static void register(@NotNull BukkitCommand command) {
+    public static boolean register(@NotNull BukkitCommand command) {
+        try {
+            final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
 
+            bukkitCommandMap.setAccessible(true);
+            CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+
+            return commandMap.register(command.getName(), command);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }
