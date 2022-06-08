@@ -6,13 +6,18 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import net.md_5.bungee.api.ChatColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Color {
+
+    private static final Pattern HEX_PATTERN = Pattern.compile("&(#\\w{6})");
 
     @NotNull
     public static List<Component> colored(@Nullable String... messages) {
@@ -93,6 +98,50 @@ public class Color {
         message = HexColor.convertHexColorToMinecraftHexString(message);
         Component component = LegacyComponentSerializer.legacy('&').deserialize(message);
         return component.decoration(TextDecoration.ITALIC, false);
+    }
+
+    public static List<String> coloredLegacyString(@Nullable List<String> messages) {
+        if (messages == null) {
+            return Lists.newArrayList();
+        }
+
+        List<String> colored = Lists.newArrayListWithCapacity(messages.size());
+        for (String message : messages) {
+            String coloredMessage = coloredLegacyString(message);
+            colored.add(coloredMessage);
+        }
+        return colored;
+    }
+
+    public static List<String> coloredLegacyString(@Nullable String... messages) {
+        if (messages == null) {
+            return Lists.newArrayList();
+        }
+
+        List<String> colored = Lists.newArrayListWithCapacity(messages.length);
+        for (String message : messages) {
+            String coloredMessage = coloredLegacyString(message);
+            colored.add(coloredMessage);
+        }
+        return colored;
+    }
+
+    @NotNull
+    public static String coloredLegacyString(@Nullable String message) {
+        if (message == null) {
+            return "";
+        }
+
+        message = HexColor.convertHexColorToMinecraftHexString(message);
+
+        Matcher matcher = HEX_PATTERN.matcher(ChatColor.translateAlternateColorCodes('&', message));
+        StringBuilder builder = new StringBuilder();
+
+        while (matcher.find()) {
+            matcher.appendReplacement(builder, ChatColor.of(matcher.group(1)).toString());
+        }
+
+        return matcher.appendTail(builder).toString();
     }
 
     @NotNull
