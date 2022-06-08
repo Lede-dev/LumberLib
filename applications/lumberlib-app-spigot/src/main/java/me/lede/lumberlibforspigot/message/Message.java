@@ -1,5 +1,6 @@
 package me.lede.lumberlibforspigot.message;
 
+import me.lede.lumberlibforspigot.color.Color;
 import org.jetbrains.annotations.Nullable;
 
 public class Message {
@@ -8,7 +9,7 @@ public class Message {
     private static @Nullable String quitMessage;
 
     public static void setJoinMessage(@Nullable String str) {
-        joinMessage = str;
+        joinMessage = Color.coloredLegacyString(str);
     }
 
     @Nullable
@@ -17,7 +18,7 @@ public class Message {
     }
 
     public static void setQuitMessage(@Nullable String str) {
-        quitMessage = str;
+        quitMessage = Color.coloredLegacyString(str);
     }
 
     @Nullable
