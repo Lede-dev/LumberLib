@@ -1,0 +1,4 @@
+name: LumberLibForProxy
+version: '${version}'
+main: me.lede.lumberlibforproxy.LumberLib
+description: LumberLib for proxy

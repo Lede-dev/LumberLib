@@ -1,0 +1,8 @@
+rootProject.name = 'LumberLib'
+
+include 'applications:lumberlib-app-spigot'
+include 'applications:lumberlib-app-proxy'
+include 'applications:lumberlib-app-test'
+
+include 'modules:lumberlib-module-color'
+

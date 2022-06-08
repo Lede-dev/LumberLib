@@ -1,0 +1,7 @@
+name: LumberLibForSpigot
+version: '${version}'
+main: me.lede.lumberlibforspigot.LumberLib
+api-version: 1.18
+authors: [ Lede ]
+description: Library for spigot server
+website: https://github.com/Lede-dev
