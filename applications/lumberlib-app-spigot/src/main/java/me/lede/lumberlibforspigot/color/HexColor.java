@@ -1,4 +1,4 @@
-package me.lede.lumberlibforproxy.color;
+package me.lede.lumberlibforspigot.color;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

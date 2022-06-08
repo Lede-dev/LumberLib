@@ -1,4 +1,4 @@
-package me.lede.lumberlibforproxy.color;
+package me.lede.lumberlibforspigot.color;
 
 import com.google.common.collect.Lists;
 import net.kyori.adventure.text.Component;
